@@ -1,5 +1,5 @@
 import numpy as np
-from .utils import check_random_state, pinvh
+from .utils import check_random_state, pinvh_old
 import scipy as sp
 
 
@@ -182,7 +182,7 @@ class MVN(object):
         cov_12 = self.covariance[np.ix_(i1, i2)]
         cov_11 = self.covariance[np.ix_(i1, i1)]
         cov_22 = self.covariance[np.ix_(i2, i2)]
-        prec_22 = pinvh(cov_22)
+        prec_22 = pinvh_old(cov_22)
         regression_coeffs = cov_12.dot(prec_22)
 
         mean = self.mean[i1] + regression_coeffs.dot((X - self.mean[i2]).T).T
