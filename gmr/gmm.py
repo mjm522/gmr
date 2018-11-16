@@ -28,7 +28,7 @@ class GMM(object):
         random number generator.
     """
     def __init__(self, n_components, priors=None, means=None, covariances=None,
-                 verbose=0, random_state=None):
+                 verbose=1, random_state=None):
         self.n_components = n_components
         self.priors = priors
         self.means = means
@@ -163,7 +163,7 @@ class GMM(object):
                 random_state=self.random_state).to_probability_density(X)
         R_norm = R.sum(axis=1)[:, np.newaxis]
         R_norm[np.where(R_norm == 0.0)] = 1.0
-        R /= (R_norm+1e-5)
+        R /= R_norm
         return R
 
     def to_probability_density(self, X):
