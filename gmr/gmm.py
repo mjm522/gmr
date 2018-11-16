@@ -87,8 +87,11 @@ class GMM(object):
                 self.covariances[k] = np.eye(n_features)
 
         R = np.zeros((n_samples, self.n_components))
-        for _ in range(n_iter):
+        for itr in range(n_iter):
             R_prev = R
+
+            if self.verbose:
+                print ("Iteration <- %d ->"%itr)
 
             # Expectation
             R = self.to_responsibilities(X)
@@ -100,8 +103,8 @@ class GMM(object):
 
             # Maximization
             w = R.sum(axis=0)
-            R_n = R / w
-            self.priors = w / w.sum()
+            R_n = R / (w + 1e-5)
+            self.priors = w / (w.sum()+1e-5)
             self.means = R_n.T.dot(X)
             for k in range(self.n_components):
                 Xm = X - self.means[k]
@@ -160,7 +163,7 @@ class GMM(object):
                 random_state=self.random_state).to_probability_density(X)
         R_norm = R.sum(axis=1)[:, np.newaxis]
         R_norm[np.where(R_norm == 0.0)] = 1.0
-        R /= R_norm
+        R /= (R_norm+1e-5)
         return R
 
     def to_probability_density(self, X):
@@ -213,7 +216,7 @@ class GMM(object):
                          mvn.marginalize(indices).to_probability_density(x))
             means[k] = conditioned.mean
             covariances[k] = conditioned.covariance
-        priors /= priors.sum()
+        priors /= (priors.sum() + 1e-5)
         return GMM(n_components=self.n_components, priors=priors, means=means,
                    covariances=covariances, random_state=self.random_state)
 

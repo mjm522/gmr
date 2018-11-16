@@ -23,7 +23,7 @@ def check_random_state(seed):
                      ' instance' % seed)
 
 
-def pinvh(a, cond=None, rcond=None, lower=True):
+def pinvh_old(a, cond=None, rcond=None, lower=True):
     """Compute the (Moore-Penrose) pseudo-inverse of a hermetian matrix.
 
     Calculate a generalized inverse of a symmetric matrix using its
