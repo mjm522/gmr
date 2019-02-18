@@ -9,9 +9,7 @@ gmr
    :target: https://landscape.io/github/AlexanderFabisch/gmr/master
    :alt: Code Health
 
-Gaussian Mixture Models (GMMs) for clustering and regression in Python.
-
-Source code repository: https://github.com/AlexanderFabisch/gmr
+Gaussian Mixture Models (GMMs) (using EM and incremental) for clustering and regression in Python.
 
 .. image:: https://github.com/mjm522/gmr/blob/master/gmm_igmm.png
 
@@ -27,9 +25,22 @@ Estimate GMM from samples and sample from GMM::
     X_sampled = gmm.sample(100)
 
 
-For more details, see::
+Guassian Mixture Regression Estimation Maximization::
 
-    help(gmr)
+      from gmr import GMM
+   
+      gmm = GMM(n_components=3, random_state=0)
+      gmm.from_samples(X)
+      Y_gmm = gmm.predict(np.array([0]), X_test[:, np.newaxis])
+
+Guassian Mixture Regression Incremental Update::
+
+       from gmr import IGMM
+
+      igmm = IGMM(n=2, sig_init=1.1, T_nov=.1)
+      for i in range(X.shape[0]):
+          igmm.update(X[i,:])
+      Y_igmm = igmm.predict(np.array([0]), X_test[:, np.newaxis])
 
 How Does It Compare to scikit-learn?
 ------------------------------------
