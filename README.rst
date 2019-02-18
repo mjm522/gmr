@@ -42,11 +42,7 @@ sklearn. That is the reason why I put the code in a separate repository.
 Installation
 ------------
 
-Install from `PyPI`_::
-
-    sudo pip install gmr
-
-or from source::
+from source::
 
     sudo python setup.py install
 
