@@ -9,7 +9,8 @@ __version__ = "1.1"
 
 from . import gmm, mvn, utils
 
-__all__ = ['gmm', 'mvn', 'utils']
+__all__ = ['gmm', 'mvn', 'utils', 'igmm']
 
 from .mvn import MVN, plot_error_ellipse
 from .gmm import GMM, plot_error_ellipses
+from .igmm import IGMM
